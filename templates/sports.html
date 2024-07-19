@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% block content %}
+<h2 class="text-3xl font-bold text-center mt-8">Sports</h2>
+<p class="text-center mt-4">Welcome to the Sports page!</p>
+{% if current_user.is_authenticated %} {% for article in news_data %}
+<div class="news-card">
+	<h2 class="text-xl font-bold">
+		<a href="{{ article.url }}" target="_blank">{{ article.title }}</a>
+	</h2>
+	<p class="mt-2 text-gray-600">{{ article.source.name }}</p>
+</div>
+{% endfor %} {% else %}
+<p class="text-center mt-4"></p>
