@@ -1,0 +1,43 @@
+{% extends "base.html" %} {% block content %}
+<div class="container mt-5">
+	<h2>My Favorites</h2>
+	<div id="favorites-container">
+		{% if not favorites %}
+		<div class="alert alert-info" role="alert">
+			You have not added any articles to your favorites yet.
+		</div>
+		{% else %} {% for favorite in favorites %}
+		<div class="card my-3 reddit-style-card" id="favorite-{{ favorite.id }}">
+			<div class="card-body">
+				<h5>
+					<a href="{{ favorite.url }}" target="_blank">{{ favorite.title }}</a>
+				</h5>
+				<button
+					class="btn btn-danger"
+					onclick="deleteFavorite({{ favorite.id }})"
+				>
+					Delete
+				</button>
+			</div>
+		</div>
+		{% endfor %} {% endif %}
+	</div>
+</div>
+{% endblock %}
+
+<style>
+	.reddit-style-card {
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		padding: 15px;
+		margin-bottom: 10px;
+		background-color: #f9f9f9;
+	}
+	.reddit-style-card h5 a {
+		color: #007bff;
+		text-decoration: none;
+	}
+	.reddit-style-card h5 a:hover {
+		text-decoration: underline;
+	}
+</style>

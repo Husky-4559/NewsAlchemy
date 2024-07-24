@@ -1,109 +1,43 @@
 # cSpell:ignore sqlalchemy jsonify wtforms newsalchemyuser yourpassword
 
-from flask import Flask, render_template, url_for, flash, redirect, jsonify, request, session
-from flask_sqlalchemy import SQLAlchemy
-from flask_bcrypt import Bcrypt
-from flask_login import LoginManager, login_user, current_user, logout_user, login_required
-from flask_session import Session
-from forms import RegistrationForm, LoginForm
-from models import db, User, Favorite
-import requests
+import os
+from flask import Flask, redirect, url_for
+from models import db, bcrypt, User
+from flask_login import LoginManager
+from routes import main as main_blueprint
+from config import Config
 
-app = Flask(__name__)
-app.config.from_object('config.Config')
-db.init_app(app)
-bcrypt = Bcrypt(app)
-login_manager = LoginManager(app)
-login_manager.login_view = 'login'
+login_manager = LoginManager()
 
-@login_manager.user_loader
-def load_user(user_id: int):
-    return User.query.get(int(user_id))
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(Config)
 
-# Initialize Flask-Session
-app.config['SESSION_SQLALCHEMY'] = db
-Session(app)
+    db.init_app(app)
+    bcrypt.init_app(app)
+    login_manager.init_app(app)
 
-@app.route("/")
-@login_required
-def home():
-    news_data = fetch_news('general')
-    return render_template('home.html', news_data=news_data)
+    # Set the login view with the default action
+    login_manager.login_view = 'main.auth'
+    login_manager.login_message = u"Please log in to access this page."
+    login_manager.login_message_category = "info"
 
-@app.route("/sports")
-@login_required
-def sports():
-    news_data = fetch_news('sports')
-    return render_template('sports.html', news_data=news_data)
+    app.register_blueprint(main_blueprint)
 
-@app.route("/entertainment")
-@login_required
-def entertainment():
-    news_data = fetch_news('entertainment')
-    return render_template('entertainment.html', news_data=news_data)
+    with app.app_context():
+        db.create_all()  # Ensure the database tables are created
 
-@app.route("/technology")
-@login_required
-def technology():
-    news_data = fetch_news('technology')
-    return render_template('technology.html', news_data=news_data)
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
 
-@app.route("/login", methods=['GET', 'POST'])
-def login():
-    if current_user.is_authenticated:
-        return redirect(url_for('home'))
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
-            login_user(user, remember=form.remember.data)
-            flash('You have been logged in!', 'success')
-            return redirect(url_for('home'))
-        else:
-            flash('Login Unsuccessful. Please check email and password', 'danger')
-    return render_template('login.html', title='Login', form=form)
+    # Override the default unauthorized handler to add the action parameter
+    @login_manager.unauthorized_handler
+    def unauthorized_callback():
+        return redirect(url_for('main.auth', action='login'))
 
-@app.route("/register", methods=['GET', 'POST'])
-def register():
-    if current_user.is_authenticated:
-        return redirect(url_for('home'))
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-        db.session.add(user)
-        db.session.commit()
-        flash('Your account has been created! You are now able to log in', 'success')
-        return redirect(url_for('login'))
-    return render_template('register.html', title='Register', form=form)
+    return app
 
-@app.route("/logout")
-def logout():
-    logout_user()
-    return redirect(url_for('login'))
-
-@app.route("/favorite/<string:title>/<string:url>")
-@login_required
-def favorite(title, url):
-    favorite = Favorite(user_id=current_user.id, title=title, url=url)
-    db.session.add(favorite)
-    db.session.commit()
-    flash('Article added to favorites!', 'success')
-    return redirect(request.referrer)
-
-@app.route("/fetch_news")
-@login_required
-def fetch_news_route():
-    category = request.args.get('category', 'general')
-    news_data = fetch_news(category)
-    return jsonify(news_data)
-
-def fetch_news(category: str):
-    url = f"https://newsapi.org/v2/top-headlines?country=us&category={category}&apiKey={app.config['NEWS_API_KEY']}"
-    response = requests.get(url)
-    if response.status_code != 200:
-        return None
-    return response.json().get('articles')
-
-if __name__ == '__main__':
+if __name__ == "__main__":
+    app = create_app()
     app.run(debug=True)

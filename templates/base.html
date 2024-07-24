@@ -15,7 +15,9 @@
 	</head>
 	<body class="bg-light">
 		<nav class="navbar navbar-expand-lg navbar-gradient navbar-dark">
-			<a class="navbar-brand" href="{{ url_for('home') }}">News Alchemy</a>
+			<a class="navbar-brand" href="#" onclick="onNavItemClick('general')"
+				>News Alchemy</a
+			>
 			<button
 				class="navbar-toggler"
 				type="button"
@@ -30,31 +32,44 @@
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('home') }}">Home</a>
+						<a class="nav-link" href="#" onclick="onNavItemClick('general')"
+							>Home</a
+						>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('sports') }}">Sports</a>
+						<a class="nav-link" href="#" onclick="onNavItemClick('sports')"
+							>Sports</a
+						>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('entertainment') }}"
+						<a
+							class="nav-link"
+							href="#"
+							onclick="onNavItemClick('entertainment')"
 							>Entertainment</a
 						>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('technology') }}"
+						<a class="nav-link" href="#" onclick="onNavItemClick('technology')"
 							>Technology</a
 						>
 					</li>
 					{% if current_user.is_authenticated %}
 					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+						<a class="nav-link" href="{{ url_for('main.favorites') }}"
+							>Favorites</a
+						>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ url_for('main.logout') }}">Logout</a>
 					</li>
 					{% else %}
 					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('login') }}">Login</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('register') }}">Register</a>
+						<a
+							class="nav-link"
+							href="{{ url_for('main.auth', action='login') }}"
+							>Login/Register</a
+						>
 					</li>
 					{% endif %}
 				</ul>
@@ -65,6 +80,7 @@
 						id="search-text"
 						placeholder="Search"
 						aria-label="Search"
+						autocomplete="on"
 					/>
 					<button
 						class="btn btn-outline-light my-2 my-sm-0"
@@ -77,8 +93,36 @@
 			</div>
 		</nav>
 		<div class="container mt-5">
+			<div class="row">
+				<div class="col-12">
+					{% with messages = get_flashed_messages(with_categories=true) %} {% if
+					messages %}
+					<div id="flash-messages">
+						{% for category, message in messages %}
+						<div
+							class="alert alert-{{ category }} alert-dismissible fade show"
+							role="alert"
+						>
+							{{ message }}
+							<button
+								type="button"
+								class="close"
+								data-dismiss="alert"
+								aria-label="Close"
+							>
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						{% endfor %}
+					</div>
+					{% endif %} {% endwith %}
+				</div>
+			</div>
 			<div class="row" id="news-container">
 				{% block content %}{% endblock %}
+			</div>
+			<div class="d-flex justify-content-center mt-4">
+				<button id="load-more-button" class="btn btn-primary">Load More</button>
 			</div>
 		</div>
 		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

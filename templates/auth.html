@@ -1,0 +1,168 @@
+{% extends "base.html" %} {% block content %}
+<section class="vh-100" style="background-color: #eee">
+	<div class="container h-100">
+		<div class="row d-flex justify-content-center align-items-center h-100">
+			<div class="col-lg-12 col-xl-11">
+				<div class="card text-black" style="border-radius: 25px">
+					<div class="card-body p-md-5">
+						<div class="row justify-content-center">
+							<div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+								<ul class="nav nav-tabs" id="authTab" role="tablist">
+									<li class="nav-item">
+										<a
+											class="nav-link active"
+											id="login-tab"
+											data-toggle="tab"
+											href="#login"
+											role="tab"
+											aria-controls="login"
+											aria-selected="true"
+											>Login</a
+										>
+									</li>
+									<li class="nav-item">
+										<a
+											class="nav-link"
+											id="register-tab"
+											data-toggle="tab"
+											href="#register"
+											role="tab"
+											aria-controls="register"
+											aria-selected="false"
+											>Register</a
+										>
+									</li>
+								</ul>
+								<div class="tab-content" id="authTabContent">
+									<div
+										class="tab-pane fade show active"
+										id="login"
+										role="tabpanel"
+										aria-labelledby="login-tab"
+									>
+										<p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+											Login
+										</p>
+										<form
+											method="POST"
+											action="{{ url_for('main.auth', action='login') }}"
+										>
+											{{ login_form.hidden_tag() }}
+											<div class="d-flex flex-row align-items-center mb-4">
+												<i class="fas fa-user fa-lg me-3 fa-fw"></i>
+												<div class="form-outline flex-fill mb-0">
+													{{ login_form.username(class="form-control",
+													placeholder="Username", id="login_username",
+													autocomplete="username") }}
+													<label class="form-label" for="login_username"
+														>Your Username</label
+													>
+												</div>
+											</div>
+											<div class="d-flex flex-row align-items-center mb-4">
+												<i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+												<div class="form-outline flex-fill mb-0">
+													{{ login_form.password(class="form-control",
+													placeholder="Password", id="login_password",
+													autocomplete="current-password") }}
+													<label class="form-label" for="login_password"
+														>Password</label
+													>
+												</div>
+											</div>
+											<div
+												class="d-flex justify-content-center mx-4 mb-3 mb-lg-4"
+											>
+												{{ login_form.submit(class="btn btn-primary btn-lg") }}
+											</div>
+										</form>
+									</div>
+									<div
+										class="tab-pane fade"
+										id="register"
+										role="tabpanel"
+										aria-labelledby="register-tab"
+									>
+										<p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+											Sign up
+										</p>
+										<form
+											method="POST"
+											action="{{ url_for('main.auth', action='register') }}"
+										>
+											{{ register_form.hidden_tag() }}
+											<div class="d-flex flex-row align-items-center mb-4">
+												<i class="fas fa-user fa-lg me-3 fa-fw"></i>
+												<div class="form-outline flex-fill mb-0">
+													{{ register_form.username(class="form-control",
+													placeholder="Username", id="register_username",
+													autocomplete="username") }}
+													<label class="form-label" for="register_username"
+														>Your Name</label
+													>
+												</div>
+											</div>
+											<div class="d-flex flex-row align-items-center mb-4">
+												<i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+												<div class="form-outline flex-fill mb-0">
+													{{ register_form.email(class="form-control",
+													placeholder="Email", id="register_email",
+													autocomplete="email") }}
+													<label class="form-label" for="register_email"
+														>Your Email</label
+													>
+												</div>
+											</div>
+											<div class="d-flex flex-row align-items-center mb-4">
+												<i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+												<div class="form-outline flex-fill mb-0">
+													{{ register_form.password(class="form-control",
+													placeholder="Password", id="register_password",
+													autocomplete="new-password") }}
+													<label class="form-label" for="register_password"
+														>Password</label
+													>
+												</div>
+											</div>
+											<div class="d-flex flex-row align-items-center mb-4">
+												<i class="fas fa-key fa-lg me-3 fa-fw"></i>
+												<div class="form-outline flex-fill mb-0">
+													{{
+													register_form.confirm_password(class="form-control",
+													placeholder="Confirm Password",
+													id="register_confirm_password",
+													autocomplete="new-password") }}
+													<label
+														class="form-label"
+														for="register_confirm_password"
+														>Repeat your password</label
+													>
+												</div>
+											</div>
+											<div
+												class="d-flex justify-content-center mx-4 mb-3 mb-lg-4"
+											>
+												{{ register_form.submit(class="btn btn-primary btn-lg")
+												}}
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+							<div
+								class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2"
+							>
+								<img
+									src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
+									class="img-fluid"
+									alt="Sample image"
+								/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}
