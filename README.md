@@ -44,7 +44,7 @@ Check out the live version of the application: https://news-alchemy.onrender.com
     ├── models.py
     ├── README.md
     ├── requirements.txt
-└── routes.py
+    └── routes.py
 
 ## Installation
 
