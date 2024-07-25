@@ -21,18 +21,18 @@ NewsAlchemy/
 ├── migrations/
 │
 ├── static/
-│ ├── js/
-│ │ └── index.js
-│ └── styles.css
+│   ├── js/
+│   │   └── index.js
+│   └── styles.css
 │
 ├── templates/
-│ ├── auth.html
-│ ├── base.html
-│ ├── entertainment.html
-│ ├── favorites.html
-│ ├── home.html
-│ ├── sports.html
-│ └── technology.html
+│   ├── auth.html
+│   ├── base.html
+│   ├── entertainment.html
+│   ├── favorites.html
+│   ├── home.html
+│   ├── sports.html
+│   └── technology.html
 │
 ├── venv/
 │
