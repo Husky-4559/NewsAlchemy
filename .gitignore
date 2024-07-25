@@ -89,8 +89,8 @@ dmypy.json
 # Database
 *.sqlite3
 
-# Secrets
-config.py
+# # Secrets
+# config.py
 
 # Logs
 *.log
