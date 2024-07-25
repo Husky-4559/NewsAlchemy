@@ -25,7 +25,7 @@ def create_app():
     app.register_blueprint(main_blueprint)
 
     with app.app_context():
-        db.create_all()  # Ensure the database tables are created
+        db.create_all()  # Database tables are created
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -38,6 +38,8 @@ def create_app():
 
     return app
 
+# Flask application instance is exposed as `app`
+app = create_app()
+
 if __name__ == "__main__":
-    app = create_app()
     app.run(debug=True)
