@@ -42,6 +42,11 @@ def favorites():
             if not title or not url:
                 return jsonify({'success': False, 'message': 'Invalid data'}), 400
 
+            # Check for existing favorite
+            existing_favorite = Favorite.query.filter_by(user_id=current_user.id, url=url).first()
+            if existing_favorite:
+                return jsonify({'success': False, 'message': 'Article is already in favorites'}), 400
+
             favorite = Favorite(user_id=current_user.id, title=title, url=url)
             db.session.add(favorite)
             db.session.commit()

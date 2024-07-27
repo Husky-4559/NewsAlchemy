@@ -12,3 +12,10 @@ class Config:
     SECRET_KEY = os.getenv('SECRET_KEY')
     SESSION_TYPE = 'sqlalchemy'
     SESSION_SQLALCHEMY_TABLE = 'sessions'
+
+class TestConfig(Config):
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+    WTF_CSRF_ENABLED = False
+    SECRET_KEY = 'test-secret-key'
+    NEWS_API_KEY = 'test-news-api-key'

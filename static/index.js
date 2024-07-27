@@ -127,7 +127,11 @@ async function addToFavorites(title, url) {
 				alert("Article added to favorites!");
 				appendToFavorites(data.favorite);
 			} else {
-				alert("Failed to add article to favorites.");
+				if (data.message === "Article is already in favorites") {
+					alert("This article is already in your favorites.");
+				} else {
+					alert("Failed to add article to favorites.");
+				}
 			}
 		} else if (response.status === 401) {
 			alert("You need to log in to add favorites.");

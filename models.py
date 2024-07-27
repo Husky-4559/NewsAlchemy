@@ -25,3 +25,7 @@ class Favorite(db.Model):
     title = db.Column(db.String(300), nullable=False)
     url = db.Column(db.String(300), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    
+    __table_args__ = (
+        db.UniqueConstraint('user_id', 'url', name='unique_user_favorite'),
+    )
