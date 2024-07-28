@@ -8,10 +8,9 @@ NewsAlchemy is a web application designed to provide users with a personalized n
 - **Personalized News**: Save and manage your favorite news articles.
 - **Smooth Scrolling**: Enjoy a seamless browsing experience with smooth scrolling.
 
-<<<<<<< HEAD
 ### Database Schema Design:
 
-    +------------+          +-------------+
++------------+          +-------------+
     |   User     |          |   Favorite  |
     +------------+          +-------------+
     | id         |<--+   +--| id          |
@@ -37,8 +36,7 @@ NewsAlchemy is a web application designed to provide users with a personalized n
     •	url: String (Not Null)
     •	user_id: Foreign Key (Integer, Not Null, References User.id)
 
-=======
->>>>>>> a7d3b988a664431719e2026f678d4d2306b903eb
+
 ## Live Demo
 
 Check out the live version of the application: https://news-alchemy.onrender.com
@@ -180,7 +178,6 @@ Check out the live version of the application: https://news-alchemy.onrender.com
 	5.	Push to the branch (git push origin feature-branch).
 	6.	Open a pull request.
 
->>>>>>> a7d3b988a664431719e2026f678d4d2306b903eb
 ### License
 
 This project is licensed under the MIT License.
