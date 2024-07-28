@@ -10,7 +10,7 @@ NewsAlchemy is a web application designed to provide users with a personalized n
 
 ### Database Schema Design:
 
-+------------+          +-------------+
+    +------------+          +-------------+
     |   User     |          |   Favorite  |
     +------------+          +-------------+
     | id         |<--+   +--| id          |
@@ -36,14 +36,13 @@ NewsAlchemy is a web application designed to provide users with a personalized n
     •	url: String (Not Null)
     •	user_id: Foreign Key (Integer, Not Null, References User.id)
 
-
 ## Live Demo
 
 Check out the live version of the application: https://news-alchemy.onrender.com
 
 ### Project Structure
 
- NewsAlchemy/
+    NewsAlchemy/
     │
     ├── instance/
     │
@@ -165,21 +164,15 @@ Check out the live version of the application: https://news-alchemy.onrender.com
 
     python -m unittest discover
 
-### Running The Application
-    flask run
-    The application should now be running on http://127.0.0.1:5000.
-
 ### Contributing
 
-	1.	Fork the repository.
-	2.	Create a new branch (git checkout -b feature-branch).
-	3.	Make your changes.
-	4.	Commit your changes (git commit -m 'Add some feature').
-	5.	Push to the branch (git push origin feature-branch).
-	6.	Open a pull request.
+    1.	Fork the repository.
+    2.	Create a new branch (git checkout -b feature-branch).
+    3.	Make your changes.
+    4.	Commit your changes (git commit -m 'Add some feature').
+    5.	Push to the branch (git push origin feature-branch).
+    6.	Open a pull request.
 
 ### License
 
 This project is licensed under the MIT License.
-
-
